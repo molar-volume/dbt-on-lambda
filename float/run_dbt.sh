@@ -1,10 +1,11 @@
 #!/bin/bash
 set -e
 
-echo "Exporting Snowflake credentials as environment variables to be used by dbt"
+echo "Retrieving env variables from Secret Manager and writing them to .env file"
+# python retrieve_sec.py
 
-# should be changed for e.g. python script which retrieves env variables from Secret Manager and loads them to env variables
-#source .env
+echo "Exporting Snowflake credentials as environment variables to be used by dbt"
+# source .env
 
 echo "Running dbt:"
 echo ""

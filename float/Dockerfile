@@ -13,6 +13,7 @@ RUN pip3 install -r requirements.txt
 
 COPY . .
 RUN chmod 755 run_dbt.sh
+RUN chmod 755 retrieve_sec.py
 # we run everything through sh, so we can execute all we'd like
 ENTRYPOINT [ "/bin/sh", "-c" ]
 CMD ["./run_dbt.sh"]
