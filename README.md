@@ -1,5 +1,3 @@
-# iap-float-ingestion-dbt-flow-test
-
 ## Setup connection to AWS account
 1. Create named profile for AWS cli https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-profiles.html
 2. In `serverless.yml`, use profile created in step 1.
