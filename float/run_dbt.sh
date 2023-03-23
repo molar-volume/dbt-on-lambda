@@ -2,10 +2,10 @@
 set -e
 
 echo "Retrieving env variables from Secret Manager and writing them to .env file"
-# python retrieve_sec.py
+python retrieve_sec.py
 
 echo "Exporting Snowflake credentials as environment variables to be used by dbt"
-# source .env
+source .env
 
 echo "Running dbt:"
 echo ""

@@ -11,5 +11,4 @@
 
 ## Next steps
 1. Create actual dbt project in `float/dbt`
-2. Create python script that retrieves credentials for Snowflake.
-3. See `run_dbt.sh` and uncomment 
+2. Script `retrieve_sec.py` should retrieve Snowflake credentials from AWS Secret Manager and write them to `.env` file (see `run_dbt.sh`)
