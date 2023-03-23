@@ -1,0 +1,20 @@
+service: dbt
+
+provider:
+  name: aws
+  stage: ${opt:stage, 'dev'}
+  profile: mirotomasik
+
+  ecr:
+    images:
+      float:
+        path: float
+        platform: linux/amd64
+
+
+functions:
+  float:
+    timeout: 900
+    memorySize: 2048
+    image:
+      name: float

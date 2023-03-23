@@ -1,0 +1,5 @@
+dbt-core==1.4.1
+dbt-snowflake
+boto3==1.24.20
+sqlfluff==1.4.5
+sqlfluff-templater-dbt==1.4.5
