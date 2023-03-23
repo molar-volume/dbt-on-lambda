@@ -12,3 +12,9 @@
 ## Next steps
 1. Create actual dbt project in `float/dbt`
 2. Script `retrieve_sec.py` should retrieve Snowflake credentials from AWS Secret Manager and write them to `.env` file (see `run_dbt.sh`)
+
+## Alternative approach
+Instead of shell script `run_dbt.sh` to run DBT commands, a python script can be used to run the DBT models.
+Then you would have standard python lambda function.
+1. Create `main.py` with lambda handler (which retrieves Snowflake secrets and run DBT code).
+2. Modify Dockerfile (remove entrypoint and change `CMD ["main.handler"]` ).
