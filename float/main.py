@@ -1,7 +1,6 @@
 import json
 import boto3
 from os import environ, chdir, system
-from dbt.tests.util import run_dbt
 
 
 def setup_profile():
@@ -13,7 +12,6 @@ def setup_profile():
 
     for key, val in json.loads(secrets).items():
         environ[key] = val
-
 
 
 def handler(event, context):
