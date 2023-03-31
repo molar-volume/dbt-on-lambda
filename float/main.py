@@ -27,5 +27,3 @@ def handler(event, context):
     system("dbt run")
 
     print("All good.")
-
-handler(None, None)
