@@ -2,8 +2,8 @@
 .serverless
 .vscode
 
-#*target
-#*logs
-#*dbt_packages
+*target
+*logs
+*dbt_packages
 
 venv
