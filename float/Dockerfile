@@ -3,17 +3,14 @@ LABEL Maintainer="Data Engineer 9000"
 
 ENV ENV dev
 ENV PROJECT_NAME float
-ENV INSTALL_PATH /usr/src/app
+# ENV INSTALL_PATH /usr/src/app
 
-RUN mkdir -p $INSTALL_PATH
-WORKDIR $INSTALL_PATH
+# RUN mkdir -p $INSTALL_PATH
+# WORKDIR $INSTALL_PATH
 
 COPY requirements.txt .
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r requirements.txt --target "${LAMBDA_TASK_ROOT}"
 
-COPY . .
-RUN chmod 755 run_dbt.sh
-RUN chmod 755 retrieve_sec.py
-# we run everything through sh, so we can execute all we'd like
-ENTRYPOINT [ "/bin/sh", "-c" ]
-CMD ["./run_dbt.sh"]
+COPY . ${LAMBDA_TASK_ROOT}
+
+CMD ["main.handler"]
