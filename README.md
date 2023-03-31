@@ -9,4 +9,4 @@
 
 ## Next steps
 1. Create actual dbt project in `float/dbt_project`, do not forget about `profiles.yml`
-2. Modify `main.py` to use your dbt proje
+2. Modify `main.py` to use your dbt project, instead `jaffle_shop`: chdir("jaffle_shop) -> chdir("dbt_project")
