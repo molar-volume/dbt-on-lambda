@@ -1,3 +1,9 @@
 .idea
 .serverless
 .vscode
+
+#*target
+#*logs
+#*dbt_packages
+
+venv
