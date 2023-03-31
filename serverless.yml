@@ -4,7 +4,6 @@ provider:
   name: aws
   stage: ${opt:stage, 'dev'}
   region: ${env:AWS_REGION, 'eu-west-1'}
-  profile: mirotomasik
   iam:
     role:
       statements:
