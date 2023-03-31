@@ -21,6 +21,5 @@ def handler(event, context):
 
     system("dbt deps")
     system("dbt build")
-    system("dbt run")
 
     print("All good.")
