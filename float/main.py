@@ -69,7 +69,7 @@ def handler(event, context):
     # it also made testing easier (as AWS Lambda keeps old imports around on warm starts)
     import dbt.main as dbt_main
     dbt_main.log_manager._file_handler.disabled = True
-    dbt_args = ["--no-write-json", "--use-colors", "run"]
+    dbt_args = ["--no-write-json", "--use-colors", "build"]
 
     try:
         setup_profile()
