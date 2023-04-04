@@ -11,11 +11,9 @@ test-paths: ["tests"]
 analysis-paths: ["analysis"]
 macro-paths: ["macros"]
 
-target-path: "target"
-clean-targets:
-    - "target"
-    - "dbt_modules"
-    - "logs"
+packages-install-path: "/tmp/dbt_packages"
+log-path: "/tmp/logs"
+target-path: "/tmp/target"
 
 require-dbt-version: [">=1.0.0", "<2.0.0"]
 
