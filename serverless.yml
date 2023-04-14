@@ -15,7 +15,7 @@ provider:
   ecr:
     images:
       float:
-        path: float
+        path: lambda
         platform: linux/amd64
 
 
@@ -24,4 +24,4 @@ functions:
     timeout: 900
     memorySize: 2048
     image:
-      name: float
+      name: lambda
