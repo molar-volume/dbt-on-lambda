@@ -5,7 +5,7 @@
 ## Deploy to AWS
 1. `sudo npm install -g serverless`
 2. `sls deploy`
-3. `sls --help` to learn other useful commands, e.g. sls remove
+3. `sls --help` to learn other useful commands, e.g. `sls remove`
 
 ## Customize for your project
 1. Replace `lambda/dbt_project` with your custom dbt project. Don't forget about `profiles.yml`.
