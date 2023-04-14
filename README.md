@@ -7,10 +7,9 @@
 2. `sls deploy`
 3. `sls --help` to learn other useful commands, e.g. sls remove
 
-## Next steps
-1. Create actual dbt project in `float/dbt_project`, do not forget about `profiles.yml`
-2. Modify `main.py` to use your dbt project, instead `jaffle_shop`: chdir("jaffle_shop) -> chdir("dbt_project")
-3. Redirect outputs in `dbt_project.yml` to `/tmp`, because it's the only writable folder in AWS lambda container:
+## Customize for your project
+1. Replace `dbt_on_lambda/dbt_project` with your custom dbt project. Don't forget about `profiles.yml`.
+2. Redirect outputs in `dbt_project.yml` to `/tmp`, because it's the only writable folder in AWS lambda container:
 ```
 packages-install-path: "/tmp/dbt_packages"
 log-path: "/tmp/logs"

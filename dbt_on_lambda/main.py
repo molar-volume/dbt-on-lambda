@@ -73,7 +73,7 @@ def handler(event, context):
 
     try:
         setup_profile()
-        chdir("jaffle_shop")
+        chdir("dbt_project")
         results, succeeded = dbt_main.handle_and_check(dbt_args)
         # main uses sys.exit which doesn't play well with the AWS Lambda handler
     except Exception as e:
