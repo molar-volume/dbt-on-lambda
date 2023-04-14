@@ -8,7 +8,7 @@
 3. `sls --help` to learn other useful commands, e.g. sls remove
 
 ## Customize for your project
-1. Replace `dbt_on_lambda/dbt_project` with your custom dbt project. Don't forget about `profiles.yml`.
+1. Replace `ambda/dbt_project` with your custom dbt project. Don't forget about `profiles.yml`.
 2. Redirect outputs in `dbt_project.yml` to `/tmp`, because it's the only writable folder in AWS lambda container:
 ```
 packages-install-path: "/tmp/dbt_packages"
