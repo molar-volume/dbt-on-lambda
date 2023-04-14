@@ -1,4 +1,4 @@
-jaffle_shop:
+dbt_project:
   outputs:
     PROD:
       type: snowflake
@@ -12,7 +12,7 @@ jaffle_shop:
       threads: 32
       client_session_keep_alive: False
       send_anonymous_usage_stats: False
-    UAT:
+    DEV:
       type: snowflake
       account: "{{ env_var('account') }}"
       user: "{{ env_var('user') }}"

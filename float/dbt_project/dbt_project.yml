@@ -1,0 +1,142 @@
+# Name your project! Project names should contain only lowercase characters
+# and underscores. A good package name should reflect your organization's
+# name or the intended use of these models
+name: 'dbt_project'
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'dbt_project'
+
+vars:
+  dest_db: |
+    {% if target.name == 'prod'  %}
+        IAP_PROD_ANALYTICS
+    {% elif target.name == 'uat'  %}
+        IAP_UAT_ANALYTICS
+    {% else %}
+        IAP_DEV_ANALYTICS
+    {% endif %}
+  dest_snapshot_schema: STAGING
+  subtract_keys: ["'photoUrl'", "'lastLogin'", "'created'", "'modified'", "'people_ids'", "'project_team'"]
+  elt_col_name: 'IAP_LAST_UPDATED_AT'
+  org_col_name: 'IAP_ORIGINATED_AT'
+  valid_from_col_name: 'IAP_VALID_FROM'
+  valid_to_col_name: 'IAP_VALID_TO'
+  extracted_at_col_name: '_EXTRACTED_AT'
+  inserted_at_col_name: '_INSERTED_AT'
+  payload_hash_col_name: '_PAYLOAD_HASH'
+  decoy_hash_col_name: '_DECOY_HASH'
+  deleted_col_name: 'IAP_IS_DELETED'
+  is_active_col_name: 'IAP_IS_LATEST'
+  latest_ingest_col_name: 'IAP_LATEST_INGEST_DATE'
+  sync_col_name: 'IAP_IS_SYNCED'
+  last_extract_id_col_name: 'LAST_EXTRACT_ID'
+  first_extract_id_col_name: 'FIRST_EXTRACT_ID'
+  valid_extract_col_name: 'IS_VALID_EXTRACT'
+  inf_date: to_date('9999-12-31')
+  inf_year: to_date('9999-01-01')
+  inf_date_lim: last_day(to_date(dateadd(year, 1, current_timestamp)), year)
+  inf_start_date: '1970-01-01'
+  fake_date: TO_DATE('1970-01-01')
+  top_position: 'CEO'
+  start_date: '2021-11-26' #'2022-01-01' #**silvia:
+  daily_hour: CAST(8 AS DECIMAL(1,0))
+  null_id: -1
+  employee_path: 'employees'
+  weekday_list: '["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]'
+  # observability_database: We should NOT set this variable here!
+  # Because the dbt-observability pkg use it this way, so keep it empty if it is the same as the target.database!
+  # database: "{{ var('observability_database', target.database) }}"
+  # observability_database: "{{ 'IAP_PROD_ANALYTICS' if target.name in ['prod','uat'] else 'IAP_IL_DEV_ANALYTICS' }}"
+  observability_schema: DBT_OBSERVABILITY
+  snowflake_query_history_threshold_days: 90
+
+# These configurations specify where dbt should look for different types of files.
+# The `source-paths` config, for example, states that models in this project can be
+# found in the "models/" directory. You probably won't need to change these!
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "/tmp/target"  # directory which will store compiled SQL files
+packages-install-path: "/tmp/dbt_packages"
+log-path: "/tmp/logs"
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# In this example config, we tell dbt to build all models in the example/ directory
+# as tables. These settings can be overridden in the individual model files
+# using the `{{ config(...) }}` macro.
+tests:
+  dbt_project:
+    +severity: warn
+models:
+  dbt_observability:
+    +tags: dbt_observability
+  dbt_project:
+    # Applies to all files under models/
+    10_datalake:
+      +materialized: incremental
+      +schema: cn
+      extract:
+        +materialized: table
+        +schema: extract
+        gsheet:
+          invoice:
+            +tags: "invoice"
+      gsheet:
+        20_cn_gsheet:
+          invoice:
+            +tags: "invoice"
+    20_mart:
+      core:
+        +materialized: table
+        +schema: core
+        gsheet:
+          invoice:
+            +tags:
+              - invoice
+      intermediate:
+        +materialized: table
+        +schema: intermediate
+      business:
+        +materialized: table
+        +schema: business
+        dim:
+          invoice:
+            +tags: "invoice"
+        _disabled:
+          +enabled: false
+        _latest_commit:
+          +enabled: false
+      interfaces:
+        reporting:
+          +materialized: table
+          +schema: reporting
+        sow:
+          +materialized: table
+          +schema: sow
+        xero:
+          +materialized: table
+          +schema: xero
+          +tags: "invoice"
+      bridge:
+        +materialized: table
+        +schema: bridge
+    _disabled:
+      +enabled: false
+
+dispatch:
+  - macro_namespace: dbt
+    search_order: ["iap", "dbt_observability", "dbt"]
+
+on-run-end: "{{ dbt_observability.upload_run_results(results) }}"
